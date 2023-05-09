@@ -22,20 +22,39 @@ dir_raw = dir_data / 'raw'
 out_dir = dir_raw / 'rogue_retrieved_availability'
 
 def get_row_values(tr: BeautifulSoup) -> List[str]:
+    """
+    Extract the values from the BeautifulSoup row representation into just a list of values.
+    
+    Args:
+        tr: BeautifulSoup table row.
+    """
     td_lst = tr.find_all('td')
     td_val_lst = [td.decode_contents() for td in td_lst]
     return td_val_lst
 
 def get_table_values(tbl: BeautifulSoup) -> List[List[str]]:
+    """
+    Pluck the table row BeautifulSoup objects into a list of lists repressenting the rows values.
+    
+    Args:
+        tbl: BeautifulSoup object for the table extracted from the full "soup".
+    """
     val_lst = [get_row_values(tr) for tr in tbl.find_all('tr')]
     val_lst = [r for r in val_lst if len(r) == 3]
     val_lst = [r for r in val_lst if r != ['Day', 'Date', 'Spaces']]
     return val_lst
 
 def process_table(tbl: BeautifulSoup) -> pd.DataFrame:
+    """
+    Convert a BeautifulSoup table into a Pandas DataFrame.
+
+    Args:
+        tbl: BeautifulSoup table plucked from the larger "soup".
+    """
     mth_str = tbl.find('th').decode_contents()    
     row_lst = get_table_values(tbl_lst[0])
-    out_lst = [[datetime.strptime(f'{int(r[1]):02d} {mth_str} {yr}', '%d %B %Y').date().isoformat(), r[2]] for r in row_lst]
+    out_lst = [[datetime.strptime(f'{int(r[1]):02d} {mth_str} {yr}', '%d %B %Y').date().isoformat(), r[2]] 
+               for r in row_lst]
     out_df = pd.DataFrame(out_lst, columns=['launch_date', 'available_user_days'])
     return out_df
 
