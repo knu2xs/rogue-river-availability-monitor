@@ -75,7 +75,7 @@ yr = today.year
 df = pd.concat([process_table(tbl) for tbl in tbl_lst])
 
 # create a partition directory in the output directory
-partition_dir_nm = f"retrieval_datetime={today.isoformat()}"
+partition_dir_nm = f"retrieval_date={today.date().isoformat()}"
 
 out_pth = out_dir / partition_dir_nm
 
