@@ -1,3 +1,6 @@
 **/.DS_Store
-env/
-venv/
+venv
+**/*.egg-info
+**/*.egg*
+**/*.pyc
+notebooks/.ipynb_checkpoints

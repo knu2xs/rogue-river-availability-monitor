@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = 'index-creation'
+version = "0.0.0"
+authors = [
+  { name="Joel McCune"},
+]
+description = "Tools for creating and working with indexes."
+readme = "README.md"
+requires-python = ">=3.6, <=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+]
+license = {file = "LICENSE"}
+dependencies = [
+    "beautifulsoup4",
+    "pandas",
+    "requests"
+]
